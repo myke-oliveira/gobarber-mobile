@@ -9,7 +9,10 @@ declare const global: {HermesInternal: null | {}};
 
 const App = () => {
   return (
-    <View />
+    <>
+    <StatusBar barStyle="light-content" backgroundColor="#312e38" />
+    <View style={{ flex: 1,  backgroundColor: '#312e38' }} />
+    </>
   );
 };
 

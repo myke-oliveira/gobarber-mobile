@@ -37,8 +37,6 @@ const SignIn: React.FC = () => {
   const navigation = useNavigation();
   const { signIn, user } = useAuth();
 
-  console.log(user);
-
   const handleSignIn = useCallback(async (data: SignInFormData): Promise<void> => {
     try {
       formRef.current?.setErrors({});
@@ -49,7 +47,6 @@ const SignIn: React.FC = () => {
       await schema.validate(data, {
         abortEarly: false
       });
-      console.log(data);
       await signIn({
         email: data.email,
         password: data.password,
@@ -57,7 +54,6 @@ const SignIn: React.FC = () => {
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
         const errors = getValidationErrors(err);
-        console.log(errors);
         formRef.current?.setErrors(errors);
         return;
       }

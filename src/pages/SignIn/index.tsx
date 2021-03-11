@@ -8,6 +8,8 @@ import { Form } from '@unform/mobile';
 // eslint-disable-next-line no-unused-vars
 import { FormHandles } from '@unform/core';
 
+import { useAuth } from '../../hooks/Auth';
+
 import getValidationErrors from '../../utils/getValidationErrors';
 
 import Input from '../../components/Input';
@@ -33,6 +35,9 @@ const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const passwordInputRef = useRef<TextInput>(null);
   const navigation = useNavigation();
+  const { signIn, user } = useAuth();
+
+  console.log(user);
 
   const handleSignIn = useCallback(async (data: SignInFormData): Promise<void> => {
     try {
@@ -45,12 +50,10 @@ const SignIn: React.FC = () => {
         abortEarly: false
       });
       console.log(data);
-      // await signIn({
-      //   email: data.email,
-      //   password: data.password,
-      // });
-
-      // history.push('/dashboard');
+      await signIn({
+        email: data.email,
+        password: data.password,
+      });
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
         const errors = getValidationErrors(err);

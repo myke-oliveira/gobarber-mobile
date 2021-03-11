@@ -47,6 +47,7 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = ({ name, ico
 
   useImperativeHandle(ref, () => ({
     focus() {
+      // eslint-disable-next-line
       inputElementRef.current?.focus();
     }
   }));
@@ -66,7 +67,7 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = ({ name, ico
     });
   }, [fieldName, registerField]);
   return (
-    <Container isFocused={isFocused}>
+    <Container isFocused={isFocused} isErrored={!!error}>
       <Icon name={icon} size={20} color={isFocused || isFilled ? '#ff9000' : '#666360'}/>
       <TextInput
         ref={inputElementRef}

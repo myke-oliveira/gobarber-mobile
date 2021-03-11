@@ -7,6 +7,7 @@ import { Form } from '@unform/mobile';
 // eslint-disable-next-line no-unused-vars
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
+import api from '../../services/api';
 
 import getValidationErrors from '../../utils/getValidationErrors';
 
@@ -42,18 +43,19 @@ const SignUp: React.FC = () => {
         email: Yup.string().required('E-mail obrigatório').email('Digite um e-mail válido'),
         password: Yup.string().min(6, 'No mínimo 6 dígitos'),
       });
+      
       await schema.validate(data, {
         abortEarly: false
       });
 
-      // await api.post('users', data);
-
+      await api.post('users', data);
+      
       Alert.alert(
         'Cadastro realizado!',
         'Você já pode fazer o seu logon no GoBarber!',
       );
 
-      // history.push('/');
+      navigation.goBack();
 
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
@@ -66,7 +68,7 @@ const SignUp: React.FC = () => {
         'Ocorreum um erro ao fazer cadastro, tente novamente.',
       );
     }
-  }, []);
+  }, [navigation]);
 
 
   return (
